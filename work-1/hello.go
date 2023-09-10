@@ -2,32 +2,28 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
 )
 
-// 求元素和
-func sumArr(a [10]int) int {
-	var sum int = 0
-	for i := 0; i < len(a); i++ {
-		sum += a[i]
-	}
-	return sum
+func func1() {
+	fmt.Println("我是 func1")
+}
+
+func func2() {
+	fmt.Println("我是 func2")
+}
+
+func defer_call() {
+	// 被defer的语句最后被执行，最后被defer的语句，最先被执行，通常用于释放资源。
+	defer func() { fmt.Println("我是 前") }()
+	defer func() { fmt.Println("我是 中") }()
+	defer func() { fmt.Println("我是 后") }()
+	defer func1()
+	defer func2()
+	panic("Error")
 }
 
 func main() {
-	// 若想做一个真正的随机数，要种子
-	// seed()种子默认是1
-	//rand.Seed(1)
-	rand.Seed(time.Now().Unix())
-
-	var b [10]int
-	for i := 0; i < len(b); i++ {
-		// 产生一个0到1000随机数
-		b[i] = rand.Intn(1000)
-	}
-	sum := sumArr(b)
-	fmt.Printf("sum=%d\n", sum)
+	defer_call()
 }
 
 // 问题解决：Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist.
